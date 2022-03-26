@@ -1,12 +1,18 @@
 ## Case Introduction
 The vulnerability we would like to analyze is from the SQL Injection attack on PHPGURUKUL Employee Record Management System 1.2, which occurred on the 13th of December in 2021. In this attack, a vulnerability in the code of system is used by attackers to log in as an admin, modifying and managing sensitive data which should have been restricted to general users. 
 
-This note will first introduce the types of SQL injection. Then detailed explanation will be provided on how to realize this attack based on the found vulnerability, how to fix it, and how to prevent similar potential problems.
+This note will first provide detailed explanation on how to realize this attack based on the found vulnerability, how to fix it, and how to prevent similar potential problems, then the team will introduce more types of SQL injection with examples.
 
 ## SQL Injection (SQLi)
 SQL injection is an attacking behavior which takes advantage of potential vulnerabilities of database and manipulates backend database using malicious SQL code to access information that should not have been displayed. SQL injection has three main types. They are in-band injection, Blind injection, and Out-of-band injection.[^1]
 
-## SQLi Types
+## Our Case: SQLi Attack on Employee Record Management System
+
+## How to Fix
+
+## Prevention
+
+## Read More: SQLi Types
 ### 1. In-band SQLi
 The concept of in-band injection is to send carefully arranged queries to the database server, which can unexpectedly access the database and retrieve needed information. This type of injection can be  further broken down into error-based SQLi and union-based SQLi.
 
@@ -27,12 +33,6 @@ Similarly, the time-based SQLi also focus on whether the database returns TRUE o
 
 ### 3. Out-of-band SQLi
 This injection method is used when it’s not able to launch an attack in the same channel as the database or when the responding time for the time-based blind method is not stable. An example of this type of injection is starting a DNS request based on the database server’s own command.[^2]
-
-## Our Case: SQLi Attack on Employee Record Management System
-
-## How to Fix
-
-## Prevention
 
 ## Useful Links
 * More Info on SQL Injection: https://www.imperva.com/learn/application-security/sql-injection-sqli/
