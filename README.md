@@ -28,16 +28,33 @@ The concept of in-band injection is to send carefully arranged queries to the da
 - #### Error-based
 Error-based SQLi determines the structure of the entire database by analyzing error messages from the response of system. To prevent error-based SQLi, developers can disable or apply restricted access on these error messages after the developing stage.[^2]
 ```
-// Example Reference: https://medium.com/@hninja049/example-of-a-error-based-sql-injection-dce72530271c
+// Example Reference: https://medium.com/@hninja049/example-of-a-error-based-sql-injection-dce72530271c (by ninja hatori)
 // In this case, the correct url target to send the query is http://testphp.vulnweb.com/artists.php?artist=1
 // However, we can change artist number from 1 to -1 to execute an error message
 // Malicious url: http://testphp.vulnweb.com/artists.php?artist=-1
 ```
-![Error Message](https://miro.medium.com/max/1400/0*HFIz560RYRMX9E_E)
+![Error Message1](https://miro.medium.com/max/1400/0*HFIz560RYRMX9E_E)
 
 ```
-// In the error message, it exposes the number of columns (62).
+// In the error message, it exposes the name of the vulnerable function.
+// Continue with the query. By adding an "order by" suffix, we can examine the number of columns.
 ```
+
+![Error Message2](https://miro.medium.com/max/1302/0*hSwPhIApUKRolxwF)
+
+```
+// The error message is not eliminated, which means the target table does not have 4 or more columns.
+// Thus, we can try 3 this time.
+```
+
+![Error Message3](https://miro.medium.com/max/1288/0*K9dezZpwdUN5_R0R)
+
+```
+// The error message just disappears, which indicates the number of columns in this table is three.
+// We can then use operation like UNION SELECT to view content from the table.
+```
+
+![Error Message4](https://miro.medium.com/max/1274/0*KjVOqNK7Dkmxe_uU)
 
 - #### Union-based
 Union-based SQLi uses the UNION operator to SELECT from multiple tables to extent the result from the original single SELECT query. These multiple results will fuse as a single HTTP response, where attackers can get their wanted information.[^2]
@@ -54,9 +71,24 @@ Blind SQLi is named “blind” as it usually won’t let the attackers see the 
 
 - #### Boolean-based
 The Boolean blind SQLi will let the server to attempt return a different result from the current status. If the Boolean result in the query is TRUE, the database will change the content of response (return a different result), or the response will remain unchanged (when the Boolean result in the query is FALSE. This process is slower than in-band injection while it can still help attackers understand the structure of the whole database.[^3]
+```
+// In the first SQL query, the attacker uses a AND operator to include a statement that will always return FALSE (1=2).
+SELECT name, description, date FROM books WHERE ID = 5 and 1=2
+
+// Then in the second SQL query, the attacker changes the statement to the one that will always return TRUE (1=1).
+SELECT name, description, date FROM books WHERE ID = 5 and 1=1
+
+// If there is a vulnerability existing in the database, it is expected not to return content for the first query but to display something for the second command. 
+// Thus, attackers can know the database reacts differently between their injected statements. 
+// Attackers usually use this type of injection to locate vulnerability among a database, after which they will inject some true malicious operations.
+```
 
 - #### Time-based
-Similarly, the time-based SQLi also focus on whether the database returns TRUE or FALSE after receiving a payload. However, the TRUE or FALSE result now depends on the responding time instead of the content changing of response. If the HTTP response is returned at once, then the result is FALSE; if it takes some time to send back the response, then the result in query is TRUE.[^3]
+Similarly, the time-based SQLi also focus on how the database reacts on the received payload. However, the vulnerability detection now depends on the responding time instead of the content changing of response. After a delay, wait, or sleep is injected, if the HTTP response is returned at once, then the response is not affected by time-related operations; if it takes some time to send back the response, then we know the injected command works and there might be a vulnerability existing on the table/database[^3]
+
+```
+SELECT name FROM students WHERE id=1-SLEEP(20)
+```
 
 ### 3. Out-of-band SQLi
 This injection method is used when it’s not able to launch an attack in the same channel as the database or when the responding time for the time-based blind method is not stable. An example of this type of injection is starting a DNS request based on the database server’s own command.[^2]
