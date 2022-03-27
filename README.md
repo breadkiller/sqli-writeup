@@ -15,6 +15,7 @@ WHERE BookID = '999' UNION SELECT Username, Password FROM Accounts;
 ```
 
 ## Our Case: SQLi Attack on Employee Record Management System
+The Employee Record Management System aimed to reduce the paper work of the company by managing all data online. The project provides two modules: User Module used to contain every users information, and Admin Module used to manage users' information. It is compiled from PHP and uses MySQL database. 
 
 ## How to Fix
 
