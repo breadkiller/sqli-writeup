@@ -94,7 +94,10 @@ SELECT name FROM students WHERE id=1-SLEEP(20)
 This injection method is used when it’s not able to launch an attack in the same channel as the database or when the responding time for the time-based blind method is not stable. An example of this type of injection is starting a DNS request based on the database server’s own command.[^2]
 
 ## Useful Links
-* More Info on SQL Injection: https://www.imperva.com/learn/application-security/sql-injection-sqli/
+- SQL Injection Examples on w3schools: https://www.w3schools.com/sql/sql_injection.asp
+- Readings on CVE-44966: https://github.com/nu11secur1ty/CVE-nu11secur1ty/tree/main/vendors/PHPGURUKUL/ANUJ%20KUMAR/Employee-Record-Management-System-SQL-Injection-Bypass-Authentication
+- Readings on SQL Injection: https://www.imperva.com/learn/application-security/sql-injection-sqli/
+- SQLi Play and Demo: https://www.codingame.com/playgrounds/154/sql-injection-demo/sql-injection
 
 ## References
 [^1]: imperva, [https://www.imperva.com/learn/application-security/sql-injection-sqli/](https://www.imperva.com/learn/application-security/sql-injection-sqli/).
