@@ -18,9 +18,20 @@ WHERE BookID = '999' UNION SELECT Username, Password FROM Accounts;
 The Employee Record Management System aimed to reduce the paper work of the company by managing all data online. The project provides two modules: User Module used to contain every users information, and Admin Module used to manage users' information. It is compiled from PHP and uses MySQL database. In this project,a vulnerability in the code of system is used by attackers to log in as an admin, modifying and managing sensitive data which should have been restricted to general users.
 
 #### Vulnerable Code Piece
+The query is constructed dynamically by concatenating a constant base query string and a user input string, the query only behaves correctly if itemName does not contain a single-quote character.
+Use username "name' or '1'='1" will causes the where clause to always evaluate to true, and it returns all entries stored in the admin table which including admin name and password.
 <img width="1001" alt="code" src="https://user-images.githubusercontent.com/47571034/160301404-82ec9f66-db55-4839-9872-47cb21ff70cc.png">
 
 ## How to Fix
+mysqli_real_escape_string
+The string to be escaped.
+Characters encoded are NUL (ASCII 0), \n, \r, \, ', ", and Control-Z.
+
+name' or '1'='1  ---- name or 1=1
+
+//Escape special characters
+$uname = mysqli_real_escape_string($con, $_POST['username']);
+$Password = mysqli_real_escape_string($con, $_POST['Password']);
 
 ## Prevention
 
