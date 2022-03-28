@@ -24,16 +24,24 @@ Use username "name' or '1'='1" will causes the where clause to always evaluate t
 
 ## How to Fix
 mysqli_real_escape_string
-The string to be escaped.
+The string to be escaped.[^2]
 Characters encoded are NUL (ASCII 0), \n, \r, \, ', ", and Control-Z.
 
 name' or '1'='1  ---- name or 1=1
 
 Escape special characters
+```
 $uname = mysqli_real_escape_string($con, $_POST['username']);
 $Password = mysqli_real_escape_string($con, $_POST['Password']);
+```
 
 ## Prevention
+### 1. Escaping All-User Input
+Use the scheme provided by the DBMS to escape all-user input, which will prevent the database from parsing inputs from users as commands or conditional statements. Instead of that, the database will treat them as literal inputs. For example, a “*” from user will not be understood as “any” by the database.
+
+### 2. Prepared Statement (Parameterized Queries)
+When a prepared statement is used, the SQL statement will be pre-compiled and then treat the input as a variable, instead of waiting for the input to be a part of the statement content.[^3]
+<img width="646" alt="code" src="https://user-images.githubusercontent.com/47571034/160352478-2f6a32dc-2564-419d-8de9-2502c54dbf64.png">
 
 ## Read More: SQLi Types
 ### 1. In-band SQLi
@@ -112,8 +120,11 @@ This injection method is used when it’s not able to launch an attack in the sa
 - Readings on CVE-44966: https://github.com/nu11secur1ty/CVE-nu11secur1ty/tree/main/vendors/PHPGURUKUL/ANUJ%20KUMAR/Employee-Record-Management-System-SQL-Injection-Bypass-Authentication
 - Readings on SQL Injection: https://www.imperva.com/learn/application-security/sql-injection-sqli/
 - SQLi Play and Demo: https://www.codingame.com/playgrounds/154/sql-injection-demo/sql-injection
+- More Options for SQLi Prevention: https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
 
 ## References
 [^1]: imperva, [https://www.imperva.com/learn/application-security/sql-injection-sqli/](https://www.imperva.com/learn/application-security/sql-injection-sqli/).
+[^2]: CWE, [https://cwe.mitre.org/data/definitions/89.html](https://cwe.mitre.org/data/definitions/89.html)
+[^3]: OWASP Cheat Sheet Series, [https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html)
 [^4]: Acunetix, [https://www.acunetix.com/websitesecurity/sql-injection2/](https://www.acunetix.com/websitesecurity/sql-injection2/).
 [^5]: Beagle Security, [https://beaglesecurity.com/blog/vulnerability/boolean-based-blind-sql-injection.html](https://beaglesecurity.com/blog/vulnerability/boolean-based-blind-sql-injection.html).
