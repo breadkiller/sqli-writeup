@@ -41,6 +41,7 @@ Use the scheme provided by the DBMS to escape all-user input, which will prevent
 
 ### 2. Prepared Statement (Parameterized Queries)
 When a prepared statement is used, the SQL statement will be pre-compiled and then treat the input as a variable, instead of waiting for the input to be a part of the statement content.[^3]
+
 <img width="646" alt="code" src="https://user-images.githubusercontent.com/47571034/160352478-2f6a32dc-2564-419d-8de9-2502c54dbf64.png">
 
 ## Read More: SQLi Types
