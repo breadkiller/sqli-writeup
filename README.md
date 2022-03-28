@@ -70,7 +70,7 @@ WHERE BookID = '999' UNION SELECT Username, Password FROM Accounts;
 ```
 
 ### 2. Blind (inferential) SQLi
-Blind SQLi is named “blind” as it usually won’t let the attackers see the content of a database in system responses directly, instead of which attackers can modify the structure of database by sending data payloads, observing the behavior of the target system.
+Blind SQLi is named “blind” as it usually won’t let the attackers see the content of a database in system responses directly, instead of which attackers can observe the behavior of the target system by sending data payloads.
 
 - #### Boolean-based
 The Boolean blind SQLi will let the server to attempt return a different result from the current status. If the Boolean result in the query is TRUE, the database will change the content of response (return a different result), or the response will remain unchanged (when the Boolean result in the query is FALSE. This process is slower than in-band injection while it can still help attackers understand the structure of the whole database and detect vulnerable entry points.[^5]
