@@ -73,7 +73,7 @@ WHERE BookID = '999' UNION SELECT Username, Password FROM Accounts;
 Blind SQLi is named “blind” as it usually won’t let the attackers see the content of a database in system responses directly, instead of which attackers can modify the structure of database by sending data payloads, observing the behavior of the target system.
 
 - #### Boolean-based
-The Boolean blind SQLi will let the server to attempt return a different result from the current status. If the Boolean result in the query is TRUE, the database will change the content of response (return a different result), or the response will remain unchanged (when the Boolean result in the query is FALSE. This process is slower than in-band injection while it can still help attackers understand the structure of the whole database.[^5]
+The Boolean blind SQLi will let the server to attempt return a different result from the current status. If the Boolean result in the query is TRUE, the database will change the content of response (return a different result), or the response will remain unchanged (when the Boolean result in the query is FALSE. This process is slower than in-band injection while it can still help attackers understand the structure of the whole database and detect vulnerable entry points.[^5]
 ```
 // In the first SQL query, the attacker uses a AND operator to include a statement that will always return FALSE (1=2).
 SELECT name, description, date FROM books WHERE ID = 5 and 1=2
@@ -87,7 +87,7 @@ SELECT name, description, date FROM books WHERE ID = 5 and 1=1
 ```
 
 - #### Time-based
-Similarly, the time-based SQLi also focus on how the database reacts on the received payload. However, the vulnerability detection now depends on the responding time instead of the content changing of response. After a delay, wait, or sleep is injected, if the HTTP response is returned at once, then the response is not affected by time-related operations; if it takes some time to send back the response, then we know the injected command works and there might be a vulnerability existing on the table/database[^5]
+Similarly, the time-based SQLi also focuses on how the database reacts on the received payload. However, the vulnerability detection now depends on the responding time instead of the content changing of response. After a delay, wait, or sleep is injected, if the HTTP response is returned at once, then the response is not affected by time-related operations; if it takes some time to send back the response, then we know the injected command works and there might be a vulnerability existing on the table/database[^5]
 
 ```
 SELECT name FROM students WHERE id=1-SLEEP(20)
