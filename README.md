@@ -29,7 +29,7 @@ Characters encoded are NUL (ASCII 0), \n, \r, \, ', ", and Control-Z.
 
 name' or '1'='1  ---- name or 1=1
 
-//Escape special characters
+Escape special characters
 $uname = mysqli_real_escape_string($con, $_POST['username']);
 $Password = mysqli_real_escape_string($con, $_POST['Password']);
 
